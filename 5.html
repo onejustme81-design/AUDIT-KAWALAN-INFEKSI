@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Audit Kawalan Infeksi KD Badang</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:#fff7ed;color:#1c1917}
+.top{position:sticky;top:0;z-index:20;background:linear-gradient(135deg,#0f766e,#0d9488 55%,#f59e0b);color:#fff;padding:18px 16px 14px;border-radius:0 0 24px 24px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.top small{letter-spacing:.14em;font-weight:800;opacity:.9}.top h1{font-size:23px;line-height:1.15;margin:6px 0 4px}.top p{margin:0;opacity:.92;font-size:14px}
+.wrap{max-width:760px;margin:auto;padding:14px 14px 40px}.info{background:#fff;border:1px solid #fed7aa;border-radius:20px;padding:16px;box-shadow:0 8px 24px rgba(234,88,12,.08)}
+.info h2{font-size:16px;margin:0 0 12px;color:#9a3412}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid .full{grid-column:1/-1}
+label{font-size:12px;font-weight:800;color:#78716c;text-transform:uppercase;letter-spacing:.06em}
+input,textarea,select{width:100%;margin-top:5px;border:1.5px solid #e7e5e4;background:#fffaf5;border-radius:12px;padding:12px 11px;font-size:16px;color:#1c1917}
+input:focus,textarea:focus{outline:3px solid #fdba74;border-color:#ea580c}
+.score{margin-top:14px;background:#111827;color:#fff;border-radius:20px;padding:16px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+.score .big{font-size:34px;font-weight:900;line-height:1}.score .lbl{font-size:12px;opacity:.75}.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.chip{border-radius:999px;padding:7px 10px;font-size:13px;font-weight:800}.g{background:#dcfce7;color:#166534}.r{background:#fee2e2;color:#991b1b}.n{background:#e7e5e4;color:#44403c}
+.bar{height:10px;background:#374151;border-radius:99px;overflow:hidden;margin-top:12px}.bar i{display:block;height:100%;background:linear-gradient(90deg,#14b8a6,#f59e0b);width:0;transition:width .35s}
+.nav{position:sticky;top:118px;z-index:10;background:#fff7ed;padding:10px 0;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.nav a{white-space:nowrap;text-decoration:none;background:#fff;border:1px solid #fed7aa;color:#9a3412;padding:9px 12px;border-radius:999px;font-weight:800;font-size:13px}
+.sec{background:#fff;border-radius:22px;overflow:hidden;margin:18px 0;border:1px solid #ffedd5;box-shadow:0 10px 28px rgba(0,0,0,.06)}
+.sec-head{background:#f97316;color:#fff;padding:16px;display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.sec-head h2{font-size:18px;line-height:1.25;margin:0}.sec-head small{display:block;margin-top:4px;opacity:.9}.pct{flex:0 0 auto;text-align:right}.pct b{font-size:24px}.pct span{font-size:11px;display:block;opacity:.9}
+.sec-body{padding:6px 16px 16px}.item{padding:16px 0;border-bottom:1px solid #f5f5f4}.item:last-child{border-bottom:0}
+.no{display:flex;gap:10px;align-items:center}.no span{min-width:38px;height:38px;border-radius:12px;background:#ffedd5;color:#c2410c;display:grid;place-items:center;font-weight:900}
+.item p{font-size:16px;line-height:1.55;margin:0}.item.sub{margin-left:8px;padding-left:12px;border-left:3px solid #fed7aa}.headline{padding:15px 0 2px;font-weight:900;color:#9a3412}
+.choices{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:13px}
+.choices button{border:2px solid #e7e5e4;background:#fafaf9;border-radius:14px;padding:13px 4px;font-size:15px;font-weight:900;cursor:pointer}
+.choices button small{display:block;font-weight:600;font-size:11px;color:#78716c}
+.choices .on-y{background:#dcfce7;border-color:#16a34a;color:#166534}.choices .on-n{background:#fee2e2;border-color:#dc2626;color:#991b1b}.choices .on-tb{background:#e7e5e4;border-color:#57534e}
+textarea{min-height:56px;resize:vertical}.note-label{margin:11px 0 0}
+.summarybox{background:#fff;border:1px solid #fed7aa;border-radius:20px;padding:16px}.summarybox pre{white-space:pre-wrap;font-family:inherit;font-size:14px;line-height:1.6;margin:0}
+.actions{max-width:520px;margin:18px auto 0;background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:16px;display:grid;gap:10px}
+.actions h3{margin:0 0 6px;text-align:center;font-size:16px}.actions button{border:0;border-radius:10px;font-weight:700;cursor:pointer}
+.actions .primary{background:#0f766e;color:#fff;width:100%;padding:14px;font-size:16px}.actions .ghost{background:#fff;border:1px solid #e7e5e4;width:100%;padding:12px;font-size:14px;color:#1c1917}
+.actions .danger{background:none;color:#b91c1c;border:1px solid #fecaca;width:100%;padding:10px;font-size:13px}
+#autoStatus{text-align:center;font-size:13px;color:#475569;margin:4px 0;min-height:18px}.footer{text-align:center;color:#78716c;font-size:12px;margin-top:18px}
+.photobox{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px;background:#fffaf5;border:1px dashed #fdba74;border-radius:14px;padding:11px}
+.photobtn{display:inline-block;background:#fff;border:1.5px solid #ea580c;color:#9a3412;padding:11px 14px;border-radius:999px;font-weight:900;font-size:14px;cursor:pointer}
+.photogrid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;width:100%}.photo{position:relative;width:104px}
+.photo img{width:104px;height:104px;object-fit:cover;border-radius:12px;border:1px solid #e7e5e4;display:block}
+.photo button{position:absolute;top:-7px;right:-7px;width:26px;height:26px;border-radius:50%;border:0;background:#dc2626;color:#fff;font-weight:900;cursor:pointer}
+.small{color:#78716c;font-size:12px}.printhead{display:none}
+.lamp9a{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}.lamp9a th,.lamp9a td{border:1px solid #d6d3d1;padding:9px;text-align:left}
+.lamp9a th{background:#e7e5e4}.lamp9a td.num,.lamp9a th.num{text-align:center}.lamp9a tr.total td{background:#e7e5e4;font-weight:900}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.nav{top:132px}.top h1{font-size:21px}.score{grid-template-columns:1fr}}
+@media print{body{background:#fff}.top,.nav,.actions,.photobtn,.photo button{display:none!important}.wrap{max-width:none;padding:0}.sec{break-inside:avoid;box-shadow:none;border:1px solid #ddd}.printhead{display:block!important;border:2px solid #0f766e;border-radius:14px;padding:14px;margin:14px 0}}
+</style>
+</head>
+<body>
+<div id="jsError" style="display:none;background:#fee2e2;color:#991b1b;padding:12px;text-align:center;font-weight:700"></div>
+<script>window.onerror=function(m){var d=document.getElementById('jsError');if(d){d.style.display='block';d.textContent='RALAT: '+m;}};</script>
+<div class="top"><small>LAMPIRAN 9  •  AKI 1/2018</small><h1>Audit Kawalan Infeksi<br>Fasiliti Kesihatan Primer</h1><p>Semak, tick dan catat bukti terus dari telefon.</p></div>
+<main class="wrap">
+  <div class="printhead"><h2 style="margin:0">LAPORAN AUDIT KAWALAN INFEKSI (AKI 1/2018)</h2><p id="printMeta" style="margin:6px 0 0"></p></div>
+  <section class="info"><h2>Maklumat Audit</h2><div class="grid">
+    <div><label>Negeri</label><input id="negeri" value="KEDAH"></div>
+    <div><label>Nama Fasiliti</label><input id="fasiliti" placeholder="Contoh: KD BADANG"></div>
+    <div><label>Pusingan Audit</label><input id="pusingan" value="1"></div>
+    <div><label>Tahun</label><input id="tahun" placeholder="Contoh: 2026"></div>
+    <div class="full"><label>Nama Juruaudit</label><input id="juruaudit" placeholder="Contoh: Nama Juruaudit"></div>
+    <div><label>Tarikh</label><input id="tarikh" placeholder="Contoh: 24/4/26"></div>
+    <div class="full"><label>Emel Juruaudit (untuk hantar laporan)</label><input id="emel" type="email" placeholder="Contoh: juruaudit@kesihatan.gov.my"></div>
+    <div class="full"><label>Pautan Web App Google Apps Script</label><input id="webapp" value="https://script.google.com/macros/s/AKfycbwG4dmV_3BNEIVIwv8KgqfZMr-PzIaVN8zwJ-BBbWPamWXAf-JeQRZWp9NFvmcZx9WwtA/exec"></div>
+  </div></section>
+  <section class="score">
+    <div><div class="lbl">PERATUS PEMATUHAN KESELURUHAN</div><div class="big" id="overallPct">0.00%</div><div class="chips"><span class="chip g" id="chipYa">Ya: 0</span><span class="chip r" id="chipTidak">Tidak: 0</span><span class="chip n" id="chipTb">TB: 0</span></div></div>
+    <div style="text-align:right"><div class="lbl" id="overallCount">Siap 0 daripada 0 item</div><div class="lbl">Kemajuan audit</div></div>
+    <div class="bar" style="grid-column:1/-1"><i id="bar"></i></div>
+  </section>
+  <nav class="nav" id="nav"></nav>
+  <div id="sections"></div>
+  <section class="summarybox" id="lamp9aBox" style="margin-top:16px">
+    <h2 style="margin:0">LAMPIRAN 9A - RINGKASAN KESELURUHAN</h2>
+    <p class="small" style="margin:8px 0 0">Pusingan Audit: <b id="lampPusingan">1</b>  |  Tahun: <b id="lampTahun">-</b>  |  Indeks Mematuhi = Peratus Pematuhan Bahagian x Weightage / 100</p>
+    <table class="lamp9a"><thead><tr><th>ELEMEN</th><th>SKOP AUDIT / LOKASI</th><th class="num">WEIGHTAGE</th><th class="num">PERATUS (%)</th><th class="num">INDEKS MEMATUHI</th></tr></thead><tbody id="lamp9aBody"></tbody><tfoot><tr class="total"><td colspan="2">PENCAPAIAN KESELURUHAN (%)</td><td class="num">100</td><td class="num" id="lampTotalPct">0.00</td><td class="num" id="lampTotalIndeks">0.00</td></tr></tfoot></table>
+    <p class="small">Nama Juruaudit: <b id="lampJuruaudit">-</b>  |  Tarikh: <b id="lampTarikh">-</b></p>
+  </section>
+  <section class="summarybox" id="todoBox" style="margin-top:16px"><h2 style="margin:0 0 10px">Ringkasan Tindakan</h2><pre id="todo">Tekan Semak Ringkasan untuk senaraikan item Tidak dan item belum diisi.</pre></section>
+  <div class="actions">
+    <h3>Hantar Laporan</h3>
+    <button class="primary" onclick="hantarAuto()">📧 Hantar Laporan PDF & CSV ke Emel</button>
+    <p id="autoStatus"></p>
+    <button class="ghost" onclick="muatTurunCSV()">📥 Muat Turun Laporan CSV</button>
+    <button class="ghost" onclick="makeSummary()">Semak Ringkasan Tindakan</button>
+    <button class="ghost" onclick="janaPDF()">📄 Cetak / Simpan PDF</button>
+    <button class="danger" onclick="clearAll()">Padam Semua Jawapan</button>
+  </div>
+  <p class="footer">KD Badang • Lampiran 9 • Jawapan disimpan automatik dalam pelayar telefon ini.</p>
+</main>
+<script>
+const RAW_DATA=`A. KEBERSIHAN TANGAN|Kebersihan tangan|1:Poster teknik pencucian tangan yang betul perlu dipamerkan di setiap sinki bilik pemeriksaan dan rawatan.;2:Mengamalkan cucian tangan bila terdedah dalam 5 keadaan yang memerlukan (5 moment hand hygiene).;3:Mengamalkan Teknik Pencucian Tangan Yang Betul [Hand Wash (HW) or Hand Rub (HR)];3.1:Tanggalkan semua barangan kemas, jam tangan dan lain-lain.;3.2:Menggunakan cecair sabun / antiseptik / hand rub secukupnya.;3.3:Langkah-langkah pencucian tangan samada HW atau HR dilakukan dengan betul.;4:Kemudahan sinki dilengkapi dengan elbow tab.;5:Bekalan cecair sabun / antiseptik yang mencukupi.;6:Bekalan towel paper mencukupi.
+B. ALAT PERLINDUNGAN DIRI (PPE)|PPE|1:Fasiliti kesihatan mempunyai Alat Pelindung Diri (PPE) yang mencukupi dan bersesuaian.;2:Anggota kesihatan menerima latihan berkaitan Alat Pelindung Diri (PPE).;3:Semua anggota kesihatan memakai PPE dengan cara yang betul dan pembuangan mengikut spesifikasi yang ditetapkan.;4:Cucian tangan dilakukan segera selepas menanggalkan PPE.;5*Gloves;5.1:Anggota kesihatan perlu memakai glove apabila ada prosedur yang melibatkan sentuhan dengan darah, cecair badan, mukus dan kulit bermasalah serta peralatan yang tercemar.;5.2:Glove perlu ditukar selepas melakukan prosedur bagi setiap pesakit.;6*Surgical mask / N95;6.1:Memakai Surgical mask semasa mengendalikan pesakit / kakitangan dengan simptom jangkitan respiratori atau demam.;6.2:Memakai N95 Respirator semasa anggota menjalankan prosedur yang menghasilkan aerosol (cth: intubasi, suctioning) terhadap pesakit yang diketahui atau disyaki menghidap jangkitan respiratori.;6.3:Seal check dilakukan setiap kali menggunakan N95 Respirator.;7*Disposable apron / gown;7.1:Disposable apron / gown diguna untuk mengelakkan kulit dan pakaian / uniform dari terkena darah atau cecair badan pesakit.;7.2:Disposable apron / gown (kes berisiko tinggi cth MERS COV) perlu ditukar selepas melakukan prosedur bagi setiap pesakit.;8:Face shield dan goggles digunakan semasa mengendalikan prosedur yang berisiko mendapat percikan.
+C. DISINFEKSI DAN STERILISASI|Sterilisasi|1:Setiap Ujian Autoklaf didokumentasikan (Rekod Ujian Sterilizer).;2:Peralatan dan perkakas yang telah diguna, dibersih menggunakan disinfeksi, dibungkus dan disteril mengikut cara yang ditetapkan.;3:Peralatan yang telah disteril, dilabel dengan jenis, dan tarikh diautoklaf.;4:Peralatan steril diletakkan dalam bekas / almari bertutup, disusun secara menegak atau melintang mengikut amalan semasa tidak melebihi 3 lapisan.;5:Peralatan steril disimpan menggunakan sistem FIFO dan disusun dalam almari / bekas yang bertutup serta bebas dari habuk dan serangga.;6*Peralatan diautoklaf semula jika:;6.1:Bungkusan tercemar (basah, kotor, habuk, berkoyak).;6.2:Peralatan steril yang tidak digunakan melebihi 6 bulan.;7:Mesin autoklaf mendapat kelulusan (Sijil Dandang) daripada Jawatankuasa Kesihatan Keselamatan Pekerjaan dan dipamerkan.;8:Mesin autoklaf diselenggara mengikut jadual yang ditetapkan.;9:Rekod latihan anggota yang mengendalikan mesin autoklaf.
+D. PENGURUSAN LINEN|Linen|1:Menggunakan PPE yang bersesuaian semasa mengendalikan linen.;2:Linen kotor dipegang jauh dari badan bagi mengelakkan kontaminasi pakaian seragam.;3:Linen kotor dikumpul, diasing dan diselenggarakan dalam beg linen mengikut kod warna yang betul.;4:Linen tercemar dicuci dengan menggunakan detergent yang sesuai (cth: bancuhan, jangkamasa penggunaan).;5:Linen bersih disimpan dalam almari yang bersih, kering dan tertutup.
+E. PENGURUSAN SISA|Sisa|1:Poster / bahan promosi mengenai pengendalian sisa dipamerkan di fasiliti kesihatan.;2:Pengasingan sisa dijalankan mengikut kategori cth: klinikal (non sharp and sharp) dan domestik.;3*Sisa klinikal;3.1:Tong sisa klinikal ada foot pedal dan berfungsi dengan baik.;3.2:Tong sisa klinikal perlu dicuci sekurang-kurangnya 1 minggu sekali menggunakan bahan disinfektan.;4*Sharp Bin;4.1:Sharp bin digunakan untuk peralatan tajam sahaja.;4.2:Tarikh mula dan tamat ditulis di penutup sharp bin (maksimum penggunaan 7 hari / full filled line).;4.3:Sharp bin yang mencapai full filled line / 7 hari penggunaan dimasukkan di dalam plastik sisa klinikal 1 lapisan serta diikat kemas dan disimpan di tempat simpanan sementara.;5:Sanitary Bin diletakkan di dalam tandas wanita, menggunakan beg sisa klinikal dan dibuang sebagai sisa klinikal.;6:Setiap penghantaran didokumenkan (Borang Pengurusan Sisa Klinikal).;7:Tempat dan bekas simpanan sementara dan juga kenderaan yang digunakan dicuci menggunakan disinfektan.;8:Pengangkutan sisa klinikal dari tempat simpanan sementara untuk tujuan pelupusan menggunakan kenderaan khusus.
+F. PEMBERSIHAN PERSEKITARAN|Persekitaran|1:Anggota kesihatan / pekerja pembersihan menggunapakai PPE yang bersesuaian ketika melakukan pembersihan.;2:Rekod pembersihan berjadual didokumenkan.;3:Semua peralatan dan persekitaran bebas dari cecair badan, habuk dan kotoran lain.;4:Mop ditag mengikut lokasi dengan menggunakan kod warna yang ditetapkan.;5:Pembersihan lantai menggunakan mop dijalankan dari kawasan / lokasi risiko rendah ke risiko tinggi.;6:Pembersihan lantai dijalankan 2 kali sehari atau lebih kerap jika perlu dikawasan klinikal.;7:Pembersihan high dusting dilakukan sekurang-kurangnya 2 kali sebulan.;8:Kaedah pembersihan menggunakan wet mopping dan double bucket.;9:Terminal cleaning dilakukan di kawasan yang telah menerima kes-kes berisiko (MRSA, ESBL, CRE).;10:Mop perlu dikeringkan di bawah cahaya matahari sebelum disimpan.;11:Cecair pembersih dan bahan disinfektan yang digunakan mengikut arahan pembekal (cth: bancuhan, penyimpanan dan jangka hayat).
+G. PENGURUSAN TUMPAHAN (SPILLAGE)|Tumpahan|1:Spillage kit yang lengkap perlu disediakan di bilik rawatan atau tempat yang bersesuaian dan mudah diperolehi.;2:Latihan berkaitan pengurusan tumpahan dilakukan.;3*Tatacara pengurusan tumpahan dilakukan dengan betul:;3.1:Kawasan yang mengalami tumpahan perlu dikuarantin dan diletakkan penanda (signage).;3.2:Pakai PPE yang bersesuaian.;3.3:Tabur sodium hypochlorite granules dari luar ke dalam dan meliputi kesemua tumpahan. Biarkan selama 5 hingga 10 minit.;3.4:Tumpahan yang telah kering dimasukkan terus ke dalam plastik beg kuning (biohazard bag) bersama scoop dan scrapper.;3.5:Ikat beg dengan cable tie dan buang ke dalam tong sisa klinikal bersama glove. Cuci tangan.;3.6:Mop (hijau) kawasan tumpahan dengan menggunakan larutan disinfektan sodium hypochlorite 1:10.;3.7:Buang PPE dan cuci tangan.;4:Pembersihan tumpahan cecair pesakit menggunakan Spillage kits.;5:Pastikan mop dibersihkan dengan disinfektan yang bersesuaian.
+H. INJECTION SAFETY AND SHARP MANAGEMENT|Suntikan|1:Carta aliran kes tertusuk jarum / benda tajam dipamerkan (cth: bilik prosedur, makmal, farmasi).;2:Rekod Saringan Imunisasi Hepatitis B Anggota lengkap, dikemaskini dan disimpan di fasiliti.;3:Kakitangan faham dan laksanakan pengendalian kes kecederaan tercucuk jarum / benda tajam mengikut carta alir dalam garis panduan seperti di Lampiran 7 (b).;4:Penggunaan needle dan syringe digunakan sebagai single use.;5:Penggunaan needle dan syringe yang baru untuk setiap ubatan yang digunakan daripada multidose vial / botol.;6:Anggota kesihatan mencatatkan tarikh apabila pertama kali membuka multidose vial dan membuangnya mengikut arahan pengilang.
+I. KEBERSIHAN RESPIRATORY DAN ETIKA BATUK|Etika Batuk|1:Poster etika batuk dipamerkan (cth: ruang menunggu, bilik rawatan).;2:Mask disediakan di kaunter pendaftaran / kaunter triage.;3:Pendidikan kesihatan berkenaan jangkitan respiratori yang diberikan didokumentasikan.
+J. PENGENDALIAN SPESIMEN|Spesimen|1:Semua anggota yang mengendalikan spesimen termasuk anggota bahagian penerimaan diberi latihan.;2:Anggota memakai lap kot makmal yang bersih semasa berada di dalam makmal.;3:Memakai PPE yang bersesuaian ketika mengendalikan spesimen klinikal yang boleh menyebabkan jangkitan.;4:Pesakit dibekalkan dengan bekas spesimen yang sesuai jika spesimen perlu diambil di rumah (cth: kahak, najis).;5:Spesimen yang dihantar ke makmal disimpan dalam bekas yang sesuai (cth: cold box).;6:Borang analisa spesimen diletakkan di dalam poket, jika tiada poket stapler di atas poket.;7:Peti sejuk penyimpanan spesimen sentiasa berfungsi dengan suhu (2 hingga 8 darjah Celsius) yang ditetapkan dan didokumenkan.;8:Tiada kebocoran pada bekas semasa penghantaran spesimen ke makmal.
+K. LATIHAN|Latihan|1:Latihan kawalan infeksi diadakan bagi anggota klinik.;2:Rekod latihan disimpan untuk rujukan.`;
+
+const DATA=RAW_DATA.trim().split('\n').map(line=>{
+  const [tajuk,pendek,itemsStr]=line.split('|');
+  const items=itemsStr.split(';').map(x=>{
+    if(x.includes('*')){const [b,t]=x.split('*');return [b,t,0];}
+    const idx=x.indexOf(':');return [x.slice(0,idx),x.slice(idx+1),1];
+  });
+  return [tajuk,pendek,items];
+});
+
+const KEY='audit-aki-siap-kosong-v2';
+const DEFAULT_WEBAPP_URL='https://script.google.com/macros/s/AKfycbwG4dmV_3BNEIVIwv8KgqfZMr-PzIaVN8zwJ-BBbWPamWXAf-JeQRZWp9NFvmcZx9WwtA/exec';
+let state=JSON.parse(localStorage.getItem(KEY)||'{}');
+function save(){localStorage.setItem(KEY,JSON.stringify(state));render();}
+function escHtml(s){return String(s||'').replace(/&/g,'&').replace(/</g,'<').replace(/>/g,'>');}
+
+async function getAllPhotosMap(){
+  const db=await openDB(),tx=db.transaction('photos','readonly');
+  const all=await new Promise((res,rej)=>{const q=tx.objectStore('photos').getAll();q.onsuccess=()=>res(q.result||[]);q.onerror=()=>rej(q.error);});
+  const map={};
+  for(const it of all){if(!map[it.itemId])map[it.itemId]=[];map[it.itemId].push(await resizeBase64(it.data,600,0.65));}
+  return map;
+}
+function resizeBase64(dataUrl,maxDim,quality){
+  return new Promise(res=>{
+    const img=new Image();
+    img.onload=()=>{let w=img.naturalWidth,h=img.naturalHeight,sc=Math.min(1,maxDim/Math.max(w,h));w=Math.round(w*sc);h=Math.round(h*sc);const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);res(c.toDataURL('image/jpeg',quality));};
+    img.onerror=()=>res(dataUrl);img.src=dataUrl;
+  });
+}
+function signBoxHtml(tajuk,nama){
+  return `<div style="font-weight:bold;font-size:11px;color:#0f766e;margin-bottom:6px;text-transform:uppercase">${escHtml(tajuk)}</div><div style="height:55px;font-size:10px;color:#94a3b8;font-style:italic">Ruangan Tandatangan</div><div style="border-top:1px dotted #475569;margin-bottom:8px"></div><div style="font-size:10.5px;margin-top:4px"><b>Nama:</b> ${escHtml(nama||'............................................')}</div><div style="font-size:10.5px;margin-top:4px"><b>Jawatan / Cop:</b> ............................................</div><div style="font-size:10.5px;margin-top:4px"><b>Tarikh:</b> ${escHtml(state.tarikh||'........ / ........ / 2026')}</div>`;
+}
+async function buildPdfHtml(){
+  const photosMap=await getAllPhotosMap(),totalIndeks=renderLamp9a();
+  let h=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial,sans-serif;font-size:11px;color:#111;margin:18px}h1{font-size:16px;margin:0 0 4px;color:#0f766e}h2{font-size:13px;margin:14px 0 6px;background:#f3f4f6;padding:6px 8px;border-left:4px solid #0f766e}table{width:100%;border-collapse:collapse;margin-bottom:10px}th,td{border:1px solid #cbd5e1;padding:5px 7px;text-align:left;vertical-align:top}th{background:#e2e8f0;font-weight:bold}.num{text-align:center}.meta td{border:none;padding:3px 6px}.ya{color:#166534;font-weight:bold}.tidak{color:#991b1b;font-weight:bold}.tb{color:#57534e}.photos img{width:130px;height:130px;object-fit:cover;border:1px solid #94a3b8;margin:4px 6px 0 0;border-radius:4px}.page-break{page-break-before:always;break-before:page}.sign-grid td{width:50%;border:1px solid #94a3b8;padding:10px}</style></head><body>`;
+  const meta=`<h1>LAPORAN AUDIT KAWALAN INFEKSI (AKI 1/2018)</h1><table class="meta"><tr><td><b>Negeri:</b> ${escHtml(state.negeri||'KEDAH')}</td><td><b>Fasiliti:</b> ${escHtml(state.fasiliti||'KD BADANG')}</td></tr><tr><td><b>Pusingan:</b> ${escHtml(state.pusingan||'1')}</td><td><b>Tahun:</b> ${escHtml(state.tahun||'-')}</td></tr><tr><td><b>Juruaudit:</b> ${escHtml(state.juruaudit||'-')}</td><td><b>Tarikh:</b> ${escHtml(state.tarikh||'-')}</td></tr></table>`;
+  const sign=`<h2>PENGESAHAN TANDATANGAN</h2><table class="sign-grid"><tr><td>${signBoxHtml('Disediakan / Diaudit Oleh (Juruaudit)',state.juruaudit||'')}</td><td>${signBoxHtml('Disahkan Oleh (Ketua Klinik / Wakil)','')}</td></tr></table>`;
+  h+=meta+`<p style="margin:4px 0 10px;font-weight:bold;color:#9a3412">BAHAGIAN 1: SENARAI SEMAK AUDIT (LAMPIRAN 9)</p>`;
+  DATA.forEach((s,si)=>{
+    const st=stats(s[2],si);
+    h+=`<h2>${escHtml(s[0])} (Pematuhan: ${st.pct.toFixed(2)}%)</h2><table><thead><tr><th style="width:45px">No</th><th>Kriteria Audit</th><th style="width:75px" class="num">Status</th><th style="width:220px">Catatan & Gambar Bukti</th></tr></thead><tbody>`;
+    s[2].forEach(it=>{
+      const [bil,teks,boleh]=it;if(!boleh){h+=`<tr style="background:#fff7ed"><td colspan="4"><b>${escHtml(bil)} ${escHtml(teks)}</b></td></tr>`;return;}
+      const id=si+'-'+bil,v=state['a'+id]||'BELUM DIISI',cls=v==='Ya'?'ya':(v==='Tidak'?'tidak':'tb');
+      const noteTxt=state['n'+id]?`<div>${escHtml(state['n'+id])}</div>`:'';
+      const pics=photosMap[id]||[],picsHtml=pics.length?`<div class="photos">${pics.map(src=>`<img src="${src}">`).join('')}</div>`:'';
+      h+=`<tr><td class="num">${escHtml(bil)}</td><td>${escHtml(teks)}</td><td class="num ${cls}">${escHtml(v)}</td><td>${noteTxt}${picsHtml}</td></tr>`;
+    });
+    h+=`</tbody></table>`;
+  });
+  h+=sign+`<div class="page-break"></div>`+meta+`<p style="margin:4px 0 10px;font-weight:bold;color:#9a3412">BAHAGIAN 2: LAMPIRAN 9A - RINGKASAN KESELURUHAN</p><h2>JADUAL PENCAPAIAN MENGIKUT WEIGHTAGE</h2><table><thead><tr><th>ELEMEN</th><th>SKOP AUDIT</th><th class="num">WEIGHTAGE</th><th class="num">PERATUS (%)</th><th class="num">INDEKS MEMATUHI</th></tr></thead><tbody>`;
+  WEIGHTS.forEach((w,si)=>{const st=stats(DATA[si][2],si),idx=st.pct*w[2]/100;h+=`<tr><td class="num"><b>${w[0]}</b></td><td>${escHtml(w[1])}</td><td class="num">${w[2]}</td><td class="num">${st.pct.toFixed(2)}</td><td class="num">${idx.toFixed(2)}</td></tr>`;});
+  h+=`<tr style="background:#e2e8f0;font-weight:bold"><td colspan="2">PENCAPAIAN KESELURUHAN (%)</td><td class="num">100</td><td class="num">${totalIndeks.toFixed(2)}</td><td class="num">${totalIndeks.toFixed(2)}</td></tr></tbody></table>`+sign+`</body></html>`;
+  return h;
+}
+function buildReportText(){
+  let lines=['LAPORAN AUDIT KAWALAN INFEKSI (AKI 1/2018)','Negeri: '+(state.negeri||'KEDAH')+' | Fasiliti: '+(state.fasiliti||'KD BADANG')+' | Pusingan: '+(state.pusingan||'1')+' | Tahun: '+(state.tahun||'-'),'Juruaudit: '+(state.juruaudit||'')+' | Tarikh: '+(state.tarikh||'')];
+  let ta=0,tb=0,tc=0;DATA.forEach((s,si)=>{const st=stats(s[2],si);ta+=st.a;tb+=st.b;tc+=st.c;lines.push('',s[0]+' | Mematuhi: '+st.a+' | Tidak: '+st.b+' | TB: '+st.c+' | Peratus: '+st.pct.toFixed(2)+'%');});
+  const pct=(ta+tb)?ta/(ta+tb)*100:0;lines.push('','KESELURUHAN | Ya: '+ta+' | Tidak: '+tb+' | TB: '+tc+' | Peratus: '+pct.toFixed(2)+'%','PENCAPAIAN KESELURUHAN (WEIGHTAGE): '+renderLamp9a().toFixed(2)+'%','','Sila rujuk lampiran PDF (Checklist & Lampiran 9A diasingkan berserta ruangan tandatangan & gambar bukti).');
+  return lines.join('\n');
+}
+async function collectReportData(){
+  return {negeri:state.negeri||'KEDAH',fasiliti:state.fasiliti||'KD BADANG',pusingan:state.pusingan||'1',tahun:state.tahun||'',juruaudit:state.juruaudit||'',tarikh:state.tarikh||'',emel:(state.emel||'').trim(),laporanTeks:buildReportText(),htmlPdf:await buildPdfHtml(),csv:buildCSV(),pencapaian:Number(renderLamp9a().toFixed(2))};
+}
+function buildCSV(){
+  let rows=[['LAPORAN AUDIT KAWALAN INFEKSI (AKI 1/2018)'],['Negeri',state.negeri||'','Fasiliti',state.fasiliti||'','Pusingan',state.pusingan||'','Tahun',state.tahun||''],['Juruaudit',state.juruaudit||'','Tarikh',state.tarikh||''],[],['ELEMEN','SKOP AUDIT','WEIGHTAGE','PERATUS (%)','INDEKS MEMATUHI']];
+  let total=0;WEIGHTS.forEach((w,si)=>{const st=stats(DATA[si][2],si),idx=st.pct*w[2]/100;total+=idx;rows.push([w[0],w[1],w[2],st.pct.toFixed(2),idx.toFixed(2)]);});
+  rows.push(['PENCAPAIAN KESELURUHAN (%)','','100',total.toFixed(2),total.toFixed(2)],[],['BAHAGIAN','NO','ITEM','JAWAPAN','CATATAN']);
+  DATA.forEach((s,si)=>{s[2].forEach(it=>{if(it[2])rows.push([s[0],it[0],it[1],state['a'+si+'-'+it[0]]||'BELUM DIISI',state['n'+si+'-'+it[0]]||'']);});});
+  return rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\r\n');
+}
+function muatTurunCSV(){
+  var csv=buildCSV(),a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='Laporan_Audit_'+(state.fasiliti||'KD_Badang').replace(/\s+/g,'_')+'.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);
+}
+async function hantarAuto(){
+  const emel=(state.emel||'').trim(),url=((state.webapp||'').trim()||DEFAULT_WEBAPP_URL),status=document.getElementById('autoStatus');
+  if(!emel){status.textContent='Sila isi Emel Juruaudit dahulu.';status.style.color='#b91c1c';return;}
+  status.textContent='Sedang memproses laporan PDF & gambar bukti untuk dihantar ke '+emel+'...';status.style.color='#0f766e';
+  try{
+    const payload=await collectReportData(),formData=new URLSearchParams();formData.append('data',JSON.stringify(payload));
+    await fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:formData.toString()});
+    status.textContent='✅ Laporan PDF (berserta gambar bukti) berjaya dihantar ke '+emel+'!';status.style.color='#166534';
+  }catch(err){status.textContent='❌ Ralat: '+err.message;status.style.color='#b91c1c';}
+}
+function janaPDF(){document.getElementById('printMeta').textContent='Negeri: '+(state.negeri||'KEDAH')+' | Fasiliti: '+(state.fasiliti||'KD BADANG')+' | Juruaudit: '+(state.juruaudit||'')+' | Tarikh: '+(state.tarikh||'');setTimeout(()=>window.print(),150);}
+['negeri','fasiliti','pusingan','tahun','juruaudit','tarikh','emel','webapp'].forEach(id=>{const el=document.getElementById(id);if(state[id])el.value=state[id];el.addEventListener('input',()=>{state[id]=el.value;localStorage.setItem(KEY,JSON.stringify(state));});});
+let nav='';DATA.forEach((s,i)=>{nav+='<a href="#s'+i+'">'+s[0].split('.')[0]+' '+s[1]+'</a>';});document.getElementById('nav').innerHTML=nav;
+let out='';
+DATA.forEach((s,si)=>{
+  out+='<section class="sec" id="s'+si+'"><div class="sec-head"><div><h2>'+s[0]+'</h2><small id="sum'+si+'"></small></div><div class="pct"><b id="pct'+si+'">0.00%</b><span>PEMATUHAN</span></div></div><div class="sec-body">';
+  s[2].forEach(it=>{
+    const [bil,teks,boleh]=it,id=si+'-'+bil;if(!boleh){out+='<div class="headline">'+bil+'   '+teks+'</div>';return;}
+    const v=state['a'+id]||'';
+    out+='<div class="item '+(bil.includes('.')?'sub':'')+'"><div class="no"><span>'+bil+'</span><p>'+teks+'</p></div><div class="choices"><button class="'+(v==='Ya'?'on-y':'')+'" onclick="pick(\''+id+'\',\'Ya\',this)">Ya<small>Memenuhi</small></button><button class="'+(v==='Tidak'?'on-n':'')+'" onclick="pick(\''+id+'\',\'Tidak\',this)">Tidak<small>Perlu tindakan</small></button><button class="'+(v==='Tidak Berkaitan'?'on-tb':'')+'" onclick="pick(\''+id+'\',\'Tidak Berkaitan\',this)">TB<small>Tidak berkaitan</small></button></div><label class="note-label">Catatan / Bukti</label><textarea placeholder="Tulis bukti penemuan di sini..." oninput="note(\''+id+'\',this.value)">'+(state['n'+id]||'').replace(/&/g,'&').replace(/</g,'<')+'</textarea><div class="photobox"><label class="photobtn" style="background:#0f766e;color:#fff;border-color:#0f766e">📷 Tangkap Gambar <input type="file" capture="environment" accept="image/*" onchange="addPhoto(\''+id+'\',this)" hidden></label> <label class="photobtn">🖼️ Pilih dari Galeri <input type="file" accept="image/*" onchange="addPhoto(\''+id+'\',this)" hidden></label><div class="photogrid" id="photos-'+id+'"></div></div></div>';
+  });
+  out+='</div></section>';
+});
+document.getElementById('sections').innerHTML=out;
+let dbP=null;
+function openDB(){if(dbP)return dbP;dbP=new Promise((res,rej)=>{const r=indexedDB.open('audit-aki-photos',1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains('photos'))r.result.createObjectStore('photos',{keyPath:'key',autoIncrement:true});};r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});return dbP;}
+async function renderPhotos(id){const box=document.getElementById('photos-'+id);if(!box)return;const db=await openDB(),tx=db.transaction('photos','readonly'),all=await new Promise((res,rej)=>{const q=tx.objectStore('photos').getAll();q.onsuccess=()=>res(q.result||[]);q.onerror=()=>rej(q.error);}),mine=all.filter(x=>x.itemId===id);box.innerHTML=mine.map(x=>'<div class="photo"><img src="'+x.data+'"><button type="button" onclick="delPhoto('+x.key+',\''+id+'\')">x</button></div>').join('');}
+async function loadAllPhotos(){DATA.forEach((s,si)=>{s[2].forEach(it=>{if(it[2])renderPhotos(si+'-'+it[0]);});});}
+async function addPhoto(id,input){const f=input.files&&input.files[0];if(!f)return;input.value='';const img=new Image(),url=URL.createObjectURL(f);img.onload=async()=>{URL.revokeObjectURL(url);const max=1200;let w=img.naturalWidth,h=img.naturalHeight,sc=Math.min(1,max/Math.max(w,h));w=Math.round(w*sc);h=Math.round(h*sc);const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);const data=c.toDataURL('image/jpeg',0.75),db=await openDB(),tx=db.transaction('photos','readwrite');tx.objectStore('photos').add({itemId:id,name:f.name,data:data,at:Date.now()});tx.oncomplete=()=>renderPhotos(id);};img.src=url;}
+async function delPhoto(key,id){if(!confirm('Padam gambar ini?'))return;const db=await openDB(),tx=db.transaction('photos','readwrite');tx.objectStore('photos').delete(key);tx.oncomplete=()=>renderPhotos(id);}
+function pick(id,v,btn){const g=btn.parentElement;[...g.children].forEach(b=>b.className='');btn.className=v==='Ya'?'on-y':(v==='Tidak'?'on-n':'on-tb');state['a'+id]=v;save();}
+function note(id,val){state['n'+id]=val;localStorage.setItem(KEY,JSON.stringify(state));}
+const WEIGHTS=[['A','Kebersihan Tangan',15],['B','Alat Pelindung Diri (PPE)',15],['C','Disinfeksi dan Sterilisasi',10],['D','Pengurusan Linen',5],['E','Pengurusan Sisa',10],['F','Pembersihan Persekitaran',10],['G','Pengurusan Tumpahan (Spillage)',10],['H','Injection Safety And Sharp Management',10],['I','Kebersihan Respiratory / Etika Batuk',5],['J','Pengendalian Spesimen',5],['K','Latihan',5]];
+function renderLamp9a(){let total=0,rows='';WEIGHTS.forEach((w,si)=>{const st=stats(DATA[si][2],si),idx=st.pct*w[2]/100;total+=idx;rows+='<tr><td style="text-align:center;font-weight:800">'+w[0]+'</td><td>'+w[1]+'</td><td class="num">'+w[2]+'</td><td class="num">'+st.pct.toFixed(2)+'</td><td class="num">'+idx.toFixed(2)+'</td></tr>';});const el=document.getElementById('lamp9aBody');if(el)el.innerHTML=rows;document.getElementById('lampTotalPct').textContent=total.toFixed(2);document.getElementById('lampTotalIndeks').textContent=total.toFixed(2);document.getElementById('lampPusingan').textContent=state.pusingan||'1';document.getElementById('lampTahun').textContent=state.tahun||'-';document.getElementById('lampJuruaudit').textContent=state.juruaudit||'-';document.getElementById('lampTarikh').textContent=state.tarikh||'-';return total;}
+function stats(items,si){let a=0,b=0,c=0;items.forEach(it=>{if(!it[2])return;const v=state['a'+si+'-'+it[0]];if(v==='Ya')a++;else if(v==='Tidak')b++;else if(v==='Tidak Berkaitan')c++;});return{a,b,c,pct:(a+b)?a/(a+b)*100:0};}
+function render(){let ta=0,tb=0,tc=0,done=0,total=0;DATA.forEach((s,si)=>{const st=stats(s[2],si);ta+=st.a;tb+=st.b;tc+=st.c;done+=st.a+st.b+st.c;total+=s[2].filter(x=>x[2]).length;document.getElementById('sum'+si).textContent='Mematuhi '+st.a+'  |  Tidak '+st.b+'  |  TB '+st.c;document.getElementById('pct'+si).textContent=st.pct.toFixed(2)+'%';});const pct=(ta+tb)?ta/(ta+tb)*100:0;document.getElementById('overallPct').textContent=pct.toFixed(2)+'%';document.getElementById('bar').style.width=pct+'%';document.getElementById('overallCount').textContent='Siap '+done+' daripada '+total+' item';document.getElementById('chipYa').textContent='Ya: '+ta;document.getElementById('chipTidak').textContent='Tidak: '+tb;document.getElementById('chipTb').textContent='TB: '+tc;renderLamp9a();}
+function makeSummary(){let lines=[];DATA.forEach((s,si)=>{s[2].forEach(it=>{if(!it[2])return;const v=state['a'+si+'-'+it[0]];if(v==='Tidak'||!v)lines.push((v?'TIDAK  •  ':'BELUM DIISI  •  ')+s[0]+'  |  '+it[0]+'  '+it[1]+'\nCatatan: '+(state['n'+si+'-'+it[0]]||'-'));});});document.getElementById('todo').textContent=lines.length?lines.join('\n\n'):'Tahniah. Semua item sudah diisi dan tiada item Tidak.';document.getElementById('todoBox').scrollIntoView();}
+async function clearAll(){if(!confirm('Padam semua jawapan, catatan dan gambar?'))return;state={};localStorage.removeItem(KEY);try{const db=await openDB(),tx=db.transaction('photos','readwrite');tx.objectStore('photos').clear();tx.oncomplete=()=>location.reload();setTimeout(()=>location.reload(),500);}catch(e){location.reload();}}
+loadAllPhotos();render();
+</script>
+</body>
+</html>
